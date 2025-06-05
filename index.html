@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>តម្រាក្បួនអត្ត: ៧តួរ ៩ឋាន</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Font: Battambang for Khmer text (for general text and now h1) -->
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- html2canvas for capturing div as image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Battambang', sans-serif; /* Apply Battambang font for general text */
+            background-color: #0a0a0a; /* Deep black for glossy look */
+        }
+
+        /* Reverted h1 to use body's font-family (Battambang) */
+        h1 {
+            font-family: 'Battambang', sans-serif; /* Explicitly set or remove this rule to inherit from body */
+        }
+
+        /* Custom styles for better appearance */
+        .container-box {
+            background-color: #ffffff;
+            padding: 2rem; /* 32px */
+            border-radius: 1rem; /* 16px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-xl */
+            width: 100%;
+            max-width: 28rem; /* max-w-md */
+            border: 1px solid #93c5fd; /* border-blue-300 */
+            transform: scale(1);
+            transition: all 0.3s ease-in-out;
+        }
+        .container-box:hover {
+            transform: scale(1.02); /* Slightly larger scale on hover */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-2xl */
+        }
+
+        /* Input label style */
+        .input-label {
+            display: block;
+            color: #4b5563; /* text-gray-700 */
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            margin-bottom: 0.5rem; /* mb-2 */
+            text-align: center; /* Center the label text */
+        }
+        /* Input field style */
+        .input-field {
+            padding: 0.75rem 1rem; /* py-3 px-4 */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-size: 1.125rem; /* text-xl */
+            color: #1f2937; /* text-gray-800 */
+            transition: all 0.2s ease-in-out;
+            text-align: center; /* Center the input value */
+            display: block; /* Ensure it takes its own line for mx-auto to work */
+            margin-left: auto; /* Center horizontally */
+            margin-right: auto; /* Center horizontally */
+            width: 24; /* Fixed width as before */
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6; /* focus:border-blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+        }
+
+        .button-style {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-weight: 700; /* font-bold */
+            color: #ffffff; /* text-white */
+            transition: all 0.3s ease-in-out; /* Smooth transition for all properties */
+            transform: translateY(0); /* Initial state for transform */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* subtle shadow */
+            background-image: linear-gradient(to right, #2563eb, #1d4ed8); /* from-blue-600 to-blue-700 */
+        }
+        .button-style:hover {
+            transform: translateY(-0.25rem); /* Lift up more on hover */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Stronger shadow on hover */
+            background-image: linear-gradient(to right, #1d4ed8, #1e40af); /* Darker gradient on hover */
+        }
+        .button-style:active {
+            transform: translateY(0); /* Push down on click */
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06); /* Smaller shadow on click */
+        }
+        .button-style:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5); /* Blue ring on focus */
+        }
+        .button-style:disabled {
+            cursor: not-allowed;
+            background-image: linear-gradient(to right, #93c5fd, #60a5fa); /* bg-blue-300 to blue-400 */
+            transform: translateY(0);
+            box-shadow: none;
+        }
+        .result-display {
+            margin-top: 1.5rem; /* mt-6 */
+            padding: 1.5rem; /* p-4 - Increased padding */
+            border-radius: 0.5rem; /* rounded-lg */
+            text-align: center;
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            background-color: #eff6ff; /* bg-blue-50 */
+            color: #1e40af; /* text-blue-800 */
+            border: 1px solid #bfdbfe; /* border-blue-200 */
+            overflow: visible; /* Ensure content is not clipped */
+            position: relative; /* Added for SVG positioning */
+        }
+        .error-message {
+            margin-top: 1rem; /* mt-4 */
+            padding: 0.75rem; /* p-3 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-size: 0.875rem; /* text-sm */
+            font-weight: 500; /* font-medium */
+            background-color: #fee2e2; /* bg-red-100 */
+            color: #b91c1c; /* text-red-700 */
+            border: 1px solid #fca5a5; /* border-red-200 */
+        }
+        .hidden {
+            display: none;
+        }
+        /* Custom class for fixed-width number display */
+        .number-cell {
+            display: inline-block;
+            width: 2.8rem; /* Slightly increased width to give more space */
+            text-align: center;
+            color: #1e40af; /* Original blue color for all numbers */
+            transition: transform 0.2s ease-in-out, color 0.2s ease-in-out; /* Smooth transition for hover effects */
+            cursor: default; /* Changed to default as lines are removed */
+        }
+        .number-cell:hover {
+            transform: scale(1); /* No scale on hover as lines are removed */
+            color: #1e40af; /* No color change on hover as lines are removed */
+        }
+        /* Specific style for download button to override general button-style for its background */
+        #downloadBtn {
+            background-image: linear-gradient(to right, #10b981, #059669); /* Green gradient */
+        }
+        #downloadBtn:hover {
+            background-image: linear-gradient(to right, #059669, #047857); /* Darker green gradient on hover */
+        }
+
+        /* Style for the new creation section */
+        .new-creation-section {
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 28rem;
+            border: 1px solid #93c5fd;
+            text-align: center;
+        }
+
+        /* Styles for the new icon button (now with text) */
+        .icon-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem; /* Smaller padding than main buttons */
+            border-radius: 0.5rem; /* Rounded corners like other buttons */
+            font-size: 1rem; /* Smaller font size for text */
+            font-weight: 600; /* Slightly bold text */
+            color: #ffffff;
+            background-color: #6b7280; /* Gray background */
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            white-space: nowrap; /* Prevent text from wrapping */
+        }
+        .icon-button:hover {
+            background-color: #4b5563; /* Darker gray on hover */
+            transform: translateY(-0.125rem);
+            box-shadow: 0 8px 10px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .icon-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
+        }
+        .icon-button:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(107, 114, 128, 0.5); /* Gray ring on focus */
+        }
+
+        /* Styles for the "Buy Coffee" button */
+        #buyCoffeeBtn {
+            background-image: linear-gradient(to right, #a0522d, #8b4513); /* Brown/saddlebrown gradient */
+        }
+        #buyCoffeeBtn:hover {
+            background-image: linear-gradient(to right, #8b4513, #69340f); /* Darker brown on hover */
+        }
+
+        /* New style for highlighted numbers (Red) */
+        .highlight-red {
+            color: #ef4444; /* Red color for highlighted text */
+            font-weight: bold;
+        }
+
+        /* New style for highlighted numbers (Yellow) */
+        .highlight-yellow {
+            color: #facc15; /* Tailwind yellow-400 */
+            font-weight: bold;
+        }
+
+        /* New style for highlighted numbers (Green - NO GLOW) */
+        .highlight-green {
+            color: #22c55e; /* Tailwind green-500 */
+            font-weight: bold;
+            /* Removed text-shadow for glow effect */
+        }
+        /* Style for the message box */
+        .message-box {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background-color: #d1fae5; /* green-100 */
+            color: #065f46; /* green-700 */
+            border: 1px solid #a7f3d0; /* green-200 */
+            text-align: center;
+        }
+        .message-box.error {
+            background-color: #fee2e2; /* red-100 */
+            color: #b91c1c; /* red-700 */
+            border: 1px solid #fca5a5; /* red-200 */
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-900 p-4">
+    <div id="mainCalculator" class="container-box">
+        <h1 id="mainTitle" class="text-4xl font-extrabold text-center text-amber-500 mb-6 tracking-tight">
+            តម្រាក្បួនអត្ត: ៧តួរ ៩ឋាន
+        </h1>
+        <p id="mainDescription" class="text-gray-600 text-sm text-center mb-6">
+            សូមបញ្ចូលថ្ងៃ ខែ ឆ្នាំ កំណើតរបស់អ្នក តាមក្បួនអត្ត:
+        </p>
+
+        <div class="space-y-6">
+            <div id="inputControls"> <!-- New wrapper for input fields and calculate button -->
+                <div class="flex justify-center items-end gap-x-4">
+                    <div class="flex-1 min-w-0">
+                        <label for="dayOfWeek" class="input-label">ថ្ងៃ (1-7):</label>
+                        <input
+                            type="number"
+                            id="dayOfWeek"
+                            class="input-field w-full"
+                            min="1"
+                            max="7"
+                            required
+                        />
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <label for="lunarMonth" class="input-label">ខែ (1-7):</label>
+                        <input
+                            type="number"
+                            id="lunarMonth"
+                            class="input-field w-full"
+                            min="1"
+                            max="7"
+                            required
+                        />
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <label for="lunarAnimalYear" class="input-label">ឆ្នាំ (1-7):</label>
+                        <input
+                            type="number"
+                            id="lunarAnimalYear"
+                            class="input-field w-full"
+                            min="1"
+                            max="7"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <button id="calculateBtn" class="button-style mt-6">
+                    គណនារកឋានទី ១-៩
+                </button>
+            </div>
+
+            <div id="allKhongDekResults" class="result-display hidden">
+                <!-- Reverted to displaying all rows -->
+                <div class="flex justify-around" id="khongDekDayDisplay"></div>
+                <div class="flex justify-around" id="khongDekMonthDisplay"></div>
+                <div class="flex justify-around" id="khongDekAnimalYearDisplay"></div>
+                <hr class="my-4 border-t-2 border-black mx-auto w-full">
+                <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around" id="khongBanchhorDisplay"></div>
+                <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around" id="khongDekEightDisplay"></div>
+                <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around" id="khongDekSixDisplay"></div>
+                <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around" id="khongDekSevenDisplay"></div>
+                <hr class="my-4 border-t-2 border-black mx-auto w-full">
+                <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around" id="khongDekNineDisplay"></div>
+                <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around" id="khongDekLastDisplay"></div>
+            </div>
+
+            <div id="errorMessage" class="error-message hidden">
+                </div>
+            
+            <!-- Removed downloadMessage div as the download button is removed -->
+            <!-- <div id="downloadMessage" class="message-box hidden"></div> -->
+
+            <!-- Removed downloadBtn as per user request -->
+            <!-- <button id="downloadBtn" class="button-style mt-4 hidden"> ទាញយកលទ្ធផល (JPG)
+            </button> -->
+
+            <div class="flex justify-center mt-4 space-x-4">
+                <button id="createNewBtn" class="icon-button">
+                    <i class="fas fa-calculator mr-2"></i> គណនាដួងកំណើតថ្មី
+                </button>
+            </div>
+        </div>
+
+        <div id="footerSocialsAndCopyright" class="mt-8 pt-4 border-t border-gray-300 text-center">
+            <div class="flex justify-center space-x-4">
+                <a href="https://www.facebook.com/beo3m4fkv0" target="_blank" class="text-blue-600 hover:text-blue-800 text-3xl">
+                    <i class="fab fa-facebook-square"></i>
+                </a>
+                <a href="https://t.me/MadamSoley" target="_blank" class="text-blue-400 hover:text-blue-600 text-3xl">
+                    <i class="fab fa-telegram"></i>
+                </a>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">
+                រក្សាសិទ្ធិគ្រប់យ៉ាងដោយ: ក្រុមសិក្សាតម្រាលេខអត្ត:_ម៉ាដាម សូឡី
+            </p>
+        </div>
+    </div>
+
+    <div id="newCreationSection" class="new-creation-section hidden">
+        <h2 class="text-3xl font-extrabold text-blue-800 mb-4">កន្លែងបង្កើតថ្មី</h2>
+        <p class="text-gray-700 text-lg mb-6">
+            នេះជាកន្លែងសម្រាប់បង្កើតមុខងារថ្មីៗ ឬកម្មវិធីផ្សេងទៀត។
+        </p>
+        <button id="goBackBtn" class="button-style bg-blue-500 hover:bg-blue-600">
+            ត្រឡប់ក្រោយ
+        </button>
+    </div>
+
+    <script>
+        // Helper function to normalize a value to the 1-7 range based on the rule
+        const normalizeToSeven = (value) => {
+            let result = (value - 1) % 7 + 1;
+            return result;
+        };
+
+        // Function to generate Khong Dek sequence and return as an array
+        const generateKhongDekSequence = (startValue) => {
+            const sequence = [];
+            for (let i = 0; i < 7; i++) {
+                const num = (startValue + i - 1) % 7 + 1;
+                sequence.push(num);
+            }
+            return sequence;
+        };
+
+        // Function to format sequence for display with fixed-width cells and optional highlighting
+        // highlightRules is an array of objects: [{ indices: [], values: [], colorClass: '' }]
+        const formatSequenceForDisplay = (sequence, highlightRules = []) => {
+            return sequence.map((num, index) => {
+                let classToApply = '';
+                for (const rule of highlightRules) {
+                    // Check if the current index is one of the indices specified in the rule
+                    if (rule.indices.includes(index)) {
+                        // If specific values are provided for this rule, check if the number matches one of them
+                        // Otherwise, if no values are specified (rule.values is null or empty), apply the class based on index alone
+                        if (rule.values === null || rule.values.length === 0 || rule.values.includes(num)) {
+                            classToApply = rule.colorClass;
+                            // Apply the first matching rule and break. Order of rules in array matters for priority.
+                            break;
+                        }
+                    }
+                }
+                return `<span class="number-cell ${classToApply}">${num}</span>`;
+            }).join('');
+        };
+
+        // Removed showDownloadMessage function as it's no longer needed
+
+        // Define the predefined sequences for Khong Dek 8 based on the normalized first value of Khong Banchhor
+        const khongDekEightMappings = {
+            1: [1, 6, 4, 2, 7, 5, 3],
+            2: [2, 7, 5, 3, 1, 6, 4],
+            3: [3, 1, 6, 4, 2, 7, 5],
+            4: [4, 2, 7, 5, 3, 1, 6],
+            5: [5, 3, 1, 6, 4, 2, 7],
+            6: [6, 4, 2, 7, 5, 3, 1],
+            7: [7, 5, 3, 1, 6, 4, 2]
+        };
+
+        // Define the predefined sequences for the NEW row (based on initial sum of day, month, year)
+        const khongDekNineMappings = {
+            1: [1, 6, 4, 2, 7, 5, 3],
+            2: [2, 7, 5, 3, 1, 6, 4],
+            3: [3, 1, 6, 4, 2, 7, 5],
+            4: [4, 2, 7, 5, 3, 1, 6],
+            5: [5, 3, 1, 6, 4, 2, 7],
+            6: [6, 4, 2, 7, 5, 3, 1],
+            7: [7, 5, 3, 1, 6, 4, 2]
+        };
+
+        // Define the predefined sequences for the FINAL answer row based on user's request
+        const finalAnswerMappings = {
+            1: [3, 5, 7, 2, 4, 6, 1],
+            2: [4, 6, 1, 3, 5, 7, 2],
+            3: [5, 7, 2, 4, 6, 1, 3],
+            4: [6, 1, 3, 5, 7, 2, 4],
+            5: [7, 2, 4, 6, 1, 3, 5],
+            6: [1, 3, 5, 7, 2, 4, 6],
+            7: [2, 4, 6, 1, 3, 5, 7]
+        };
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lunarMonthInput = document.getElementById('lunarMonth');
+            const lunarAnimalYearInput = document.getElementById('lunarAnimalYear');
+            const dayOfWeekInput = document.getElementById('dayOfWeek');
+            const calculateBtn = document.getElementById('calculateBtn');
+            // const downloadBtn = document.getElementById('downloadBtn'); // Removed
+            const allKhongDekResults = document.getElementById('allKhongDekResults');
+            const errorMessage = document.getElementById('errorMessage');
+            const inputControls = document.getElementById('inputControls');
+            // const downloadMessage = document.getElementById('downloadMessage'); // Removed
+            const footerSocialsAndCopyright = document.getElementById('footerSocialsAndCopyright'); // Get the new footer element
+            const mainTitle = document.getElementById('mainTitle'); // Get the main title
+            const mainDescription = document.getElementById('mainDescription'); // Get the main description
+
+            // New elements for the "Create New" functionality
+            const createNewBtn = document.getElementById('createNewBtn');
+            const mainCalculator = document.getElementById('mainCalculator');
+            const newCreationSection = document.getElementById('newCreationSection');
+            const goBackBtn = document.getElementById('goBackBtn');
+
+            // Function to hide messages (This one is scoped locally to DOMContentLoaded for convenience)
+            const hideMessages = () => {
+                allKhongDekResults.classList.add('hidden');
+                errorMessage.classList.add('hidden');
+                // downloadBtn.classList.add('hidden'); // Removed
+                // downloadMessage.classList.add('hidden'); // Removed
+            };
+
+            // Function to display error message (This one is scoped locally to DOMContentLoaded for convenience)
+            const showErrorMessage = (message) => {
+                hideMessages();
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('hidden');
+            };
+
+            calculateBtn.addEventListener('click', () => {
+                hideMessages(); // Clear previous messages and lines
+
+                let dayOfWeekValue = parseInt(dayOfWeekInput.value);
+                let lunarMonthValue = parseInt(lunarMonthInput.value);
+                let lunarAnimalYearValue = parseInt(lunarAnimalYearInput.value);
+
+                // Input validation for day of week (1-7)
+                if (isNaN(dayOfWeekValue) || dayOfWeekInput.value.trim() === '' ||
+                    dayOfWeekValue < 1 || dayOfWeekValue > 7) {
+                    showErrorMessage('សូមបញ្ចូលថ្ងៃក្នុងសប្តាហ៍ជាលេខពី 1 ដល់ 7។');
+                    return;
+                }
+                // Input validation for month (1-7)
+                if (isNaN(lunarMonthValue) || lunarMonthInput.value.trim() === '' ||
+                    lunarMonthValue < 1 || lunarMonthValue > 7) {
+                    showErrorMessage('សូមបញ្ចូលខែជាលេខពី 1 ដល់ 7។');
+                    return;
+                }
+                // Input validation for animal year (1-7)
+                if (isNaN(lunarAnimalYearValue) || lunarAnimalYearInput.value.trim() === '' ||
+                    lunarAnimalYearValue < 1 || lunarAnimalYearValue > 7) {
+                    showErrorMessage('សូមបញ្ចូលឆ្នាំសត្វជាលេខពី 1 ដល់ 7។');
+                    return;
+                }
+
+                // Apply the normalization rule to each input value
+                dayOfWeekValue = normalizeToSeven(dayOfWeekValue);
+                lunarMonthValue = normalizeToSeven(lunarMonthValue);
+                lunarAnimalYearValue = normalizeToSeven(lunarAnimalYearValue);
+
+                // Generate Khong Dek sequences as arrays (for internal calculation)
+                const khongDekDaySequenceNums = generateKhongDekSequence(dayOfWeekValue);
+                const khongDekMonthSequenceNums = generateKhongDekSequence(lunarMonthValue);
+                const khongDekAnimalYearSequenceNums = generateKhongDekSequence(lunarAnimalYearValue);
+
+                // Calculate Khong Banchhor (Vertical Digits) - raw sum
+                const khongBanchhorSequence = [];
+                for (let i = 0; i < 7; i++) {
+                    const sum = khongDekDaySequenceNums[i] + khongDekMonthSequenceNums[i] + khongDekAnimalYearSequenceNums[i];
+                    khongBanchhorSequence.push(sum);
+                }
+
+                // Logic for Khong Dek 8 (ជួរទី 8) - Normalized sum of Khong Banchhor values
+                const khongDekEightSequence = [];
+                for (let i = 0; i < 7; i++) {
+                    const normalizedSum = normalizeToSeven(khongBanchhorSequence[i]);
+                    khongDekEightSequence.push(normalizedSum);
+                }
+
+                // Calculate Khong Dek 6 (Based on Khong Dek 8 * 2, then normalize to 1-7)
+                const khongDekSixSequence = [];
+                for (let i = 0; i < 7; i++) {
+                    let multipliedValue = khongDekEightSequence[i] * 2;
+                    khongDekSixSequence.push(normalizeToSeven(multipliedValue));
+                }
+
+                // Calculate Khong Dek 7 (New row based on Khong Dek 6 * 2, then normalize to 1-7)
+                const khongDekSevenSequence = [];
+                for (let i = 0; i < 7; i++) {
+                    let multipliedValue = khongDekSixSequence[i] * 2;
+                    khongDekSevenSequence.push(normalizeToSeven(multipliedValue));
+                }
+
+                // Calculation for Khong Dek Nine (previously "ជួរចុងក្រោយ")
+                const initialSumForNine = dayOfWeekValue + lunarMonthValue + lunarAnimalYearValue;
+                const normalizedInitialSumForNine = normalizeToSeven(initialSumForNine);
+                const khongDekNineSequence = khongDekNineMappings[normalizedInitialSumForNine];
+
+                // NEW CALCULATION FOR THE FINAL ANSWER ROW (ជួរចម្លើយចុងក្រោយ)
+                // 1. Get the 28th digit (which is the last digit of Khong Banchhor Sequence, index 6)
+                const digit28 = khongBanchhorSequence[6];
+
+                // 2. Get the 56th digit (which is the last digit of Khong Dek Nine Sequence, index 6)
+                const digit56 = khongDekNineSequence[6];
+
+                // 3. Sum these two digits
+                const sumOfDigits = digit28 + digit56;
+
+                // 4. Normalize the sum to get the key for the final answer sequence
+                const finalAnswerDigitKey = normalizeToSeven(sumOfDigits);
+
+                // 5. Get the final answer sequence from the predefined mappings
+                const khongDekLastSequence = finalAnswerMappings[finalAnswerDigitKey];
+
+
+                // Define highlight rules for each sequence based on the provided image
+                const khongDekDayHighlightRules = [{ indices: [1], values: null, colorClass: 'highlight-red' }];
+                const khongDekMonthHighlightRules = [{ indices: [1], values: null, colorClass: 'highlight-red' }];
+                const khongDekAnimalYearHighlightRules = [{ indices: [0], values: null, colorClass: 'highlight-red' }];
+
+                const khongBanchhorHighlightRules = [
+                    // Green highlight rule for specific values (no glow)
+                    {
+                        indices: [0, 1, 2, 3, 4, 5, 6], // Corresponds to global positions 22-28
+                        values: [9, 11, 16, 19],
+                        colorClass: 'highlight-green'
+                    },
+                    // Red highlight rule for specific values
+                    {
+                        indices: [0, 1, 2, 3, 4, 5, 6], // Corresponds to global positions 22-28
+                        values: [12, 3, 8, 7, 10, 20],
+                        colorClass: 'highlight-red'
+                    },
+                    // Yellow highlight rule for specific values (updated to include 4, 6, 18)
+                    {
+                        indices: [0, 1, 2, 3, 4, 5, 6], // Corresponds to global positions 22-28
+                        values: [5, 13, 15, 17, 21, 4, 6, 18], // Added 6 and 18 here
+                        colorClass: 'highlight-yellow'
+                    }
+                ];
+
+                const khongDekEightHighlightRules = [{ indices: [1], values: null, colorClass: 'highlight-red' }];
+                const khongDekSixHighlightRules = [{ indices: [5], values: null, colorClass: 'highlight-red' }];
+                const khongDekSevenHighlightRules = [{ indices: [0, 4], values: null, colorClass: 'highlight-red' }];
+                const khongDekNineHighlightRules = [{ indices: [4, 5], values: null, colorClass: 'highlight-red' }];
+                const khongDekLastHighlightRules = []; // No highlights for this row
+
+
+                // Format all sequences for display with fixed-width cells and apply rules
+                const khongDekDayDisplay = formatSequenceForDisplay(khongDekDaySequenceNums, khongDekDayHighlightRules);
+                const khongDekMonthDisplay = formatSequenceForDisplay(khongDekMonthSequenceNums, khongDekMonthHighlightRules);
+                const khongDekAnimalYearDisplay = formatSequenceForDisplay(khongDekAnimalYearSequenceNums, khongDekAnimalYearHighlightRules);
+                const khongBanchhorDisplay = formatSequenceForDisplay(khongBanchhorSequence, khongBanchhorHighlightRules);
+                const khongDekEightDisplay = formatSequenceForDisplay(khongDekEightSequence, khongDekEightHighlightRules);
+                const khongDekSixDisplay = formatSequenceForDisplay(khongDekSixSequence, khongDekSixHighlightRules);
+                const khongDekSevenDisplay = formatSequenceForDisplay(khongDekSevenSequence, khongDekSevenHighlightRules);
+                const khongDekNineDisplay = formatSequenceForDisplay(khongDekNineSequence, khongDekNineHighlightRules);
+                const khongDekLastDisplay = formatSequenceForDisplay(khongDekLastSequence, khongDekLastHighlightRules);
+
+
+                // Display all results in a single column
+                allKhongDekResults.innerHTML = `
+                    <div class="flex justify-around">${khongDekDayDisplay}</div>
+                    <div class="flex justify-around">${khongDekMonthDisplay}</div>
+                    <div class="flex justify-around">${khongDekAnimalYearDisplay}</div>
+                    <hr class="my-4 border-t-2 border-black mx-auto w-full">
+                    <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around">
+                        ${khongBanchhorDisplay}
+                    </div>
+                    <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around">
+                        ${khongDekEightDisplay}
+                    </div>
+                    <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around">
+                        ${khongDekSixDisplay}
+                    </div>
+                    <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around">
+                        ${khongDekSevenDisplay}
+                    </div>
+                    <hr class="my-4 border-t-2 border-black mx-auto w-full">
+                    <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around">
+                        ${khongDekNineDisplay}
+                    </div>
+                    <div class="mt-4 text-2xl font-bold text-blue-800 flex justify-around">
+                        ${khongDekLastDisplay}
+                    </div>
+                `;
+                allKhongDekResults.classList.remove('hidden');
+                // downloadBtn.classList.remove('hidden'); // Removed
+                inputControls.classList.add('hidden'); // Hide input fields and calculate button
+                footerSocialsAndCopyright.classList.add('hidden'); // Hide the footer section
+                mainTitle.classList.add('hidden'); // Hide the main title
+                mainDescription.classList.add('hidden'); // Hide the main description
+            });
+
+            // Removed Event listener for the download button
+            /*
+            downloadBtn.addEventListener('click', () => {
+                // Temporarily hide the download button to prevent it from being captured in the screenshot
+                downloadBtn.classList.add('hidden');
+                downloadMessage.classList.add('hidden'); // Hide any previous download messages
+
+                // Show an immediate message that processing is starting
+                showDownloadMessage('កំពុងបង្កើតរូបភាព... សូមរង់ចាំបន្តិច។');
+
+                // Capture only the allKhongDekResults div
+                const elementToCapture = document.getElementById('allKhongDekResults');
+
+                // Add a slightly longer delay to ensure rendering is complete before capturing
+                setTimeout(() => {
+                    html2canvas(elementToCapture, {
+                        scale: 2, // Increase scale for better quality image
+                        useCORS: true, // Important for handling external resources like Google Fonts
+                        backgroundColor: '#eff6ff' // Match the background of result-display div
+                    }).then(canvas => {
+                        const image = canvas.toDataURL('image/jpeg', 0.9); // Convert to JPG with 90% quality
+                        
+                        // Create a temporary link element
+                        const link = document.createElement('a');
+                        link.href = image;
+                        link.target = '_blank'; // Open in a new tab
+                        link.rel = 'noopener noreferrer'; // Security best practice for target='_blank'
+                        
+                        // Programmatically click the link to open the image in a new tab
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        // Show a message to the user to manually save the image
+                        showDownloadMessage('រូបភាពបានបើកនៅក្នុង Tab ថ្មី។ សូមចុចយូរ (Long-press) លើរូបភាពដើម្បី Save។');
+
+                    }).catch(error => {
+                        showDownloadMessage('មានបញ្ហាក្នុងការបង្កើតរូបភាព: ' + error.message, true); // Show error message
+                        console.error('Error generating image:', error);
+                    }).finally(() => {
+                        // Always show the download button again after capture attempt
+                        downloadBtn.classList.remove('hidden');
+                    });
+                }, 100); // Reduced delay to 100ms
+            });
+            */
+
+            // Event listener for the "Create New" button (now functions as a reset for the calculator)
+            createNewBtn.addEventListener('click', () => {
+                allKhongDekResults.classList.add('hidden'); // Hide results
+                inputControls.classList.remove('hidden'); // Show input fields and calculate button
+                dayOfWeekInput.value = ''; // Clear input fields
+                lunarMonthInput.value = '';
+                lunarAnimalYearInput.value = '';
+                errorMessage.classList.add('hidden'); // Hide any error messages
+                // downloadBtn.classList.add('hidden'); // Removed
+                // downloadMessage.classList.add('hidden'); // Removed
+                footerSocialsAndCopyright.classList.remove('hidden'); // Show the footer section again
+                mainTitle.classList.remove('hidden'); // Show the main title
+                mainDescription.classList.remove('hidden'); // Show the main description
+            });
+
+            // Event listener for the "Go Back" button (from new creation section)
+            goBackBtn.addEventListener('click', () => {
+                newCreationSection.classList.add('hidden'); // Hide the new creation section
+                mainCalculator.classList.remove('hidden'); // Show the main calculator
+                hideMessages(); // Clear any messages/results from the calculator
+                inputControls.classList.remove('hidden'); // Ensure input controls are visible when returning
+                footerSocialsAndCopyright.classList.remove('hidden'); // Show the footer section again
+                mainTitle.classList.remove('hidden'); // Show the main title
+                mainDescription.classList.remove('hidden'); // Show the main description
+            });
+
+            // Local visitor counter logic
+            let visitorCount = localStorage.getItem('khmerLunarCalculatorVisits');
+            if (visitorCount) {
+                visitorCount = parseInt(visitorCount) + 1;
+            } else {
+                visitorCount = 1;
+            }
+            localStorage.setItem('khmerLunarCalculatorVisits', visitorCount);
+            // Removed display of visitor count
+            // localVisitorCountSpan.textContent = `ចំនួនអ្នកចូលប្រើប្រាស់: ${visitorCount} |`; /* Updated text */
+            
+            // Optional: Clear messages when any input changes
+            dayOfWeekInput.addEventListener('input', hideMessages);
+            lunarMonthInput.addEventListener('input', hideMessages);
+            lunarAnimalYearInput.addEventListener('input', hideMessages);
+        });
+    </script>
+</body>
+</html>
